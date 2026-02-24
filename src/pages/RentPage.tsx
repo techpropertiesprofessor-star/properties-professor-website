@@ -22,7 +22,7 @@ export function RentPage() {
   const [selectedCity, setSelectedCity] = useState('');
   const [selectedType, setSelectedType] = useState('');
   const [savedProperties, setSavedProperties] = useState<string[]>([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(isUserLoggedIn());
+  const [isLoggedIn] = useState(isUserLoggedIn());
 
   // Parse URL parameters on mount
   useEffect(() => {
