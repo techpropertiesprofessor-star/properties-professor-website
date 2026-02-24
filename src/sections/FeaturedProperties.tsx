@@ -17,7 +17,7 @@ const isUserLoggedIn = () => {
 export function FeaturedProperties() {
   const [properties, setProperties] = useState<Property[]>(mockProperties.slice(0, 6));
   const [savedProperties, setSavedProperties] = useState<string[]>([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(isUserLoggedIn());
+  const [isLoggedIn] = useState(isUserLoggedIn());
   const scrollRef = useRef<HTMLDivElement>(null);
   const { ref, isVisible } = useScrollAnimation<HTMLElement>();
 
