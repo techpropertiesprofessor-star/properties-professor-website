@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { cities, propertyTypes } from '@/data/mockData';
 import type { Property } from '@/types';
 
-const API_BASE = 'http://localhost:5001/api';
+const API_BASE = import.meta.env.VITE_API_URL || 'http://143.198.94.42:5001/api';
 
 // Helper function to check if user is logged in
 const isUserLoggedIn = () => {
