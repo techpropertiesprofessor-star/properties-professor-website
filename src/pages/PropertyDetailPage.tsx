@@ -550,17 +550,15 @@ export function PropertyDetailPage() {
               </h2>
               <div className="flex items-start gap-4">
                 {property.developer.logo && (
-                {property.developer.logo && (
                 <img
                   src={property.developer.logo}
                   alt={property.developer.name}
                   className="w-20 h-20 rounded-xl border border-gray-200"
                 />
                 )}
-                )}
                 <div className="flex-1">
                   <h3 className="font-bold text-gray-800 text-lg">{property.developer.name}</h3>
-                  {property.developer.description && {property.developer.description && <p className="text-gray-600 text-sm mt-1">{property.developer.description}</p>}}
+                  {property.developer.description && <p className="text-gray-600 text-sm mt-1">{property.developer.description}</p>}
                   
                   <div className="flex items-center gap-2 mt-3">
                     <div className="flex items-center gap-1">
@@ -568,10 +566,8 @@ export function PropertyDetailPage() {
                       <span className="font-medium text-gray-800">{property.developer.trustScore}/100</span>
                     </div>
                     {property.developer.since && (<>
-                    {property.developer.since && (<>
                     <span className="text-gray-400">•</span>
                     <span className="text-sm text-gray-500">Since {property.developer.since}</span>
-                    </>)}
                     </>)}
                   </div>
 
