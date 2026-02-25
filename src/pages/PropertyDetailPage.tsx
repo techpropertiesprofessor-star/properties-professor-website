@@ -506,21 +506,21 @@ export function PropertyDetailPage() {
                   <Sofa className="w-5 h-5 text-gray-400" />
                   <div>
                     <p className="text-sm text-gray-500">Furnishing</p>
-                    <p className="font-medium text-gray-800 capitalize">{property.furnishing.replace('-', ' ')}</p>
+                    <p className="font-medium text-gray-800 capitalize">{property.furnishing ? property.furnishing.replace('-', ' ') : 'N/A'}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <Ruler className="w-5 h-5 text-gray-400" />
                   <div>
                     <p className="text-sm text-gray-500">Floor</p>
-                    <p className="font-medium text-gray-800">{property.floor} of {property.totalFloors}</p>
+                    <p className="font-medium text-gray-800">{property.floor || "-"} of {property.totalFloors || "-"}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <Clock className="w-5 h-5 text-gray-400" />
                   <div>
                     <p className="text-sm text-gray-500">Age of Property</p>
-                    <p className="font-medium text-gray-800">{property.ageOfProperty} years</p>
+                    <p className="font-medium text-gray-800">{property.ageOfProperty || 0} years</p>
                   </div>
                 </div>
               </div>
@@ -549,22 +549,30 @@ export function PropertyDetailPage() {
                 Developer Information
               </h2>
               <div className="flex items-start gap-4">
+                {property.developer.logo && (
+                {property.developer.logo && (
                 <img
                   src={property.developer.logo}
                   alt={property.developer.name}
                   className="w-20 h-20 rounded-xl border border-gray-200"
                 />
+                )}
+                )}
                 <div className="flex-1">
                   <h3 className="font-bold text-gray-800 text-lg">{property.developer.name}</h3>
-                  <p className="text-gray-600 text-sm mt-1">{property.developer.description}</p>
+                  {property.developer.description && {property.developer.description && <p className="text-gray-600 text-sm mt-1">{property.developer.description}</p>}}
                   
                   <div className="flex items-center gap-2 mt-3">
                     <div className="flex items-center gap-1">
                       <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
                       <span className="font-medium text-gray-800">{property.developer.trustScore}/100</span>
                     </div>
+                    {property.developer.since && (<>
+                    {property.developer.since && (<>
                     <span className="text-gray-400">•</span>
                     <span className="text-sm text-gray-500">Since {property.developer.since}</span>
+                    </>)}
+                    </>)}
                   </div>
 
                   <div className="grid grid-cols-2 gap-4 mt-4">
