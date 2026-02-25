@@ -88,7 +88,7 @@ export function SettingsManager() {
   useEffect(() => {
     const loadSettings = async () => {
       try {
-        const response = await fetch('http://143.198.94.42:5001/api/settings');
+        const response = await fetch('https://api.propertiesprofessor.com/api/settings');
         const data = await response.json();
         if (data) {
           // Merge with defaults to ensure all fields exist
@@ -108,7 +108,7 @@ export function SettingsManager() {
     setIsSaving(true);
     try {
       // Save to backend
-      const response = await fetch('http://143.198.94.42:5001/api/settings', {
+      const response = await fetch('https://api.propertiesprofessor.com/api/settings', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -149,7 +149,7 @@ export function SettingsManager() {
       formDataUpload.append('maxWidth', '500');
       formDataUpload.append('quality', '90');
 
-      const response = await fetch('http://143.198.94.42:5001/api/media/upload', {
+      const response = await fetch('https://api.propertiesprofessor.com/api/media/upload', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formDataUpload,

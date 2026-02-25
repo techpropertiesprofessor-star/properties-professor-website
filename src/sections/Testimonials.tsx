@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Star, Quote, ChevronLeft, ChevronRight, Play, X } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
-const API_BASE = 'http://143.198.94.42:5001/api';
+const API_BASE = 'https://api.propertiesprofessor.com/api';
 
 // Helper function to extract YouTube video ID from various URL formats
 function getYouTubeVideoId(url: string): string | null {

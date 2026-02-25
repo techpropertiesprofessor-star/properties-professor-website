@@ -1,7 +1,7 @@
 // API Service for Properties Professor
 // Connects frontend to backend APIs
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://143.198.94.42:5001/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://api.propertiesprofessor.com/api';
 
 // Helper function for API requests
 async function apiRequest<T>(

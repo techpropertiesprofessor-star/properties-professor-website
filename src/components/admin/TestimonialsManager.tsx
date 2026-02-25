@@ -27,7 +27,7 @@ interface Testimonial {
   createdAt: string;
 }
 
-const API_BASE = 'http://143.198.94.42:5001/api';
+const API_BASE = 'https://api.propertiesprofessor.com/api';
 
 export function TestimonialsManager() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);

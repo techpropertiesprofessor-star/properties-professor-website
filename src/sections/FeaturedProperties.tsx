@@ -5,7 +5,7 @@ import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { mockProperties } from '@/data/mockData';
 import type { Property } from '@/types';
 
-const API_BASE = 'http://143.198.94.42:5001/api';
+const API_BASE = 'https://api.propertiesprofessor.com/api';
 
 // Helper function to check if user is logged in
 const isUserLoggedIn = () => {

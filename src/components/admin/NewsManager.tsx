@@ -67,7 +67,7 @@ const categoryOptions = [
   { value: 'general', label: 'General' }
 ];
 
-const API_BASE = 'http://143.198.94.42:5001/api';
+const API_BASE = 'https://api.propertiesprofessor.com/api';
 
 export function NewsManager() {
   const [news, setNews] = useState<NewsArticle[]>([]);

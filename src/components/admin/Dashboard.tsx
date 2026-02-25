@@ -82,7 +82,7 @@ export function Dashboard() {
       }
 
       // Fetch analytics data
-      const analyticsRes = await fetch('http://143.198.94.42:5001/api/analytics/dashboard', {
+      const analyticsRes = await fetch('https://api.propertiesprofessor.com/api/analytics/dashboard', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -100,7 +100,7 @@ export function Dashboard() {
       }
 
       // Fetch recent leads
-      const leadsRes = await fetch('http://143.198.94.42:5001/api/leads?limit=5&sort=-createdAt', {
+      const leadsRes = await fetch('https://api.propertiesprofessor.com/api/leads?limit=5&sort=-createdAt', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'

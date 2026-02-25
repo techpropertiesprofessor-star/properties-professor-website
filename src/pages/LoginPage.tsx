@@ -18,7 +18,7 @@ export function LoginPage() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://143.198.94.42:5001/api/auth/login', {
+      const response = await fetch('https://api.propertiesprofessor.com/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
