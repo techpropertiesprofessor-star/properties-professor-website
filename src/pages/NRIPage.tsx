@@ -9,7 +9,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { getSiteSettings } from '@/components/admin/SettingsManager';
 
-const API_BASE = 'http://localhost:5001/api';
+const API_BASE = 'http://143.198.94.42:5001/api';
 
 // Helper function to check if user is logged in
 const isUserLoggedIn = () => {

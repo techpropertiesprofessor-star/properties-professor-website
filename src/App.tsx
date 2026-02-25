@@ -40,7 +40,7 @@ function MainWebsite() {
 
   useEffect(() => {
     // Fetch settings from backend
-    fetch('http://localhost:5001/api/settings')
+    fetch('http://143.198.94.42:5001/api/settings')
       .then(res => res.json())
       .then(data => {
         setSiteSettings(data);
@@ -82,7 +82,7 @@ function NewProjectsPage() {
 
   const fetchNewProjects = async () => {
     try {
-      const response = await fetch('http://localhost:5001/api/properties/section/newProjects');
+      const response = await fetch('http://143.198.94.42:5001/api/properties/section/newProjects');
       const data = await response.json();
       if (data.success) {
         setProperties(data.data);
@@ -163,7 +163,7 @@ function CommercialPage() {
 
   const fetchCommercialProperties = async () => {
     try {
-      const response = await fetch('http://localhost:5001/api/properties/section/commercial');
+      const response = await fetch('http://143.198.94.42:5001/api/properties/section/commercial');
       const data = await response.json();
       if (data.success) {
         setProperties(data.data);
@@ -283,7 +283,7 @@ function ContactPage() {
     setSubmitting(true);
     try {
       // Save to leads API
-      const response = await fetch('http://localhost:5001/api/leads', {
+      const response = await fetch('http://143.198.94.42:5001/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -297,7 +297,7 @@ function ContactPage() {
       
       // Also save to customer data
       try {
-        await fetch('http://localhost:5001/api/customers', {
+        await fetch('http://143.198.94.42:5001/api/customers', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -514,7 +514,7 @@ function SavedPropertiesPage() {
   const fetchSavedProperties = async () => {
     try {
       const token = localStorage.getItem('pp_token');
-      const response = await fetch('http://localhost:5001/api/users/saved-properties', {
+      const response = await fetch('http://143.198.94.42:5001/api/users/saved-properties', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();
@@ -531,7 +531,7 @@ function SavedPropertiesPage() {
   const handleRemove = async (propertyId: string) => {
     try {
       const token = localStorage.getItem('pp_token');
-      const response = await fetch(`http://localhost:5001/api/users/save-property/${propertyId}`, {
+      const response = await fetch(`http://143.198.94.42:5001/api/users/save-property/${propertyId}`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
       });

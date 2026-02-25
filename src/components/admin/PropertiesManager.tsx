@@ -80,7 +80,7 @@ const sectionOptions: SectionToggle[] = [
   { id: 'trending', label: 'Trending', icon: TrendingUp, color: 'bg-cyan-500' }
 ];
 
-const API_BASE = 'http://localhost:5001/api';
+const API_BASE = 'http://143.198.94.42:5001/api';
 
 export function PropertiesManager() {
   const [properties, setProperties] = useState<Property[]>([]);

@@ -151,14 +151,14 @@ export function AIMatcher() {
       }
       
       // Fetch from API
-      const response = await fetch(`http://localhost:5001/api/properties/ai-match?${params.toString()}`);
+      const response = await fetch(`http://143.198.94.42:5001/api/properties/ai-match?${params.toString()}`);
       const data = await response.json();
       
       if (data.success && data.data.length > 0) {
         setMatchedProperties(data.data.slice(0, 3));
       } else {
         // Fallback: get any available properties
-        const fallbackResponse = await fetch('http://localhost:5001/api/properties/section/featured');
+        const fallbackResponse = await fetch('http://143.198.94.42:5001/api/properties/section/featured');
         const fallbackData = await fallbackResponse.json();
         if (fallbackData.success) {
           setMatchedProperties(fallbackData.data.slice(0, 3));

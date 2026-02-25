@@ -3,7 +3,7 @@ import { MapPin, Shield, GraduationCap, Train, Utensils, Building2, TrendingUp, 
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { Button } from '@/components/ui/button';
 
-const API_BASE = 'http://localhost:5001/api';
+const API_BASE = 'http://143.198.94.42:5001/api';
 
 interface NeighborhoodData {
   location: string;
