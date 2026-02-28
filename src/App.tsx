@@ -55,10 +55,8 @@ function MainWebsite() {
       <Navigation />
       <main>
         <Hero />
-        <TrustBar />
-        {siteSettings?.features?.enableAIMatcher !== false && <AIMatcher />}
-        <FeaturedProperties />
         <NeighborhoodDNA />
+        {siteSettings?.features?.enableAIMatcher !== false && <AIMatcher />}
         {siteSettings?.features?.enableFinancialCalculator !== false && <FinancialJourney />}
         {siteSettings?.features?.enableNRIServices !== false && <NRISection />}
         <DeveloperSpotlight />

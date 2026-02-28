@@ -181,8 +181,7 @@ export function Hero() {
                   <span className="block text-[#FF6B35]">Perfect Home</span>
                 </h1>
                 <p className="text-xl text-white/80 max-w-lg">
-                  Discover verified properties with blockchain security, 
-                  AI-powered matching, and complete transparency.
+                  Explore a wide range of properties for every budget and lifestyle.
                 </p>
               </div>
 
