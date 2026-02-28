@@ -1,21 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Shield, CheckCircle, Award, Users, TrendingUp, Lock } from 'lucide-react';
 
-interface TrustItem {
-  icon: React.ElementType;
-  value: string;
-  label: string;
-  suffix?: string;
-}
-
-const trustItems: TrustItem[] = [
-  { icon: Shield, value: '100', label: 'Legal Verification', suffix: '%' },
-  { icon: CheckCircle, value: '10000', label: 'Verified Properties', suffix: '+' },
-  { icon: Award, value: '500', label: 'Cr Value Transacted', suffix: '+' },
-  { icon: Users, value: '50000', label: 'Happy Families', suffix: '+' },
-  { icon: TrendingUp, value: '95', label: 'On-Time Delivery', suffix: '%' },
-  { icon: Lock, value: '0', label: 'Fraud Cases', suffix: '' }
-];
 
 function AnimatedCounter({ value, suffix = '' }: { value: string; suffix?: string }) {
   const [count, setCount] = useState(0);

@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Navigation } from '@/components/Navigation';
 import { Hero } from '@/sections/Hero';
-import { TrustBar } from '@/sections/TrustBar';
 import { AIMatcher } from '@/sections/AIMatcher';
-import { FeaturedProperties } from '@/sections/FeaturedProperties';
 import { NeighborhoodDNA } from '@/sections/NeighborhoodDNA';
 import { FinancialJourney } from '@/sections/FinancialJourney';
 import { NRISection } from '@/sections/NRISection';
