@@ -166,15 +166,20 @@ export function PropertyDetailPage() {
     );
   }
 
+  const images = property.images || [];
+  const amenities = property.amenities || [];
+  const developer = property.developer || { name: 'Unknown', trustScore: 0, completedProjects: 0, ongoingProjects: 0 };
+  const location = property.location || { city: '', area: '', address: '' };
+
   const nextImage = () => {
     setCurrentImageIndex((prev) => 
-      prev === property.images.length - 1 ? 0 : prev + 1
+      prev === images.length - 1 ? 0 : prev + 1
     );
   };
 
   const prevImage = () => {
     setCurrentImageIndex((prev) => 
-      prev === 0 ? property.images.length - 1 : prev - 1
+      prev === 0 ? images.length - 1 : prev - 1
     );
   };
 
@@ -321,14 +326,21 @@ export function PropertyDetailPage() {
           <div className="grid md:grid-cols-2 gap-4">
             {/* Main Image */}
             <div className="relative h-[400px] md:h-[500px] rounded-2xl overflow-hidden group">
+              {images.length > 0 ? (
               <img
-                src={property.images[currentImageIndex]?.url}
-                alt={property.images[currentImageIndex]?.caption || property.title}
+                src={images[currentImageIndex]?.url}
+                alt={images[currentImageIndex]?.caption || property.title}
                 className="w-full h-full object-cover"
+                onError={(e) => { (e.target as HTMLImageElement).src = 'https://via.placeholder.com/800x500?text=Image+Not+Available'; }}
               />
+              ) : (
+                <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                  <p className="text-gray-500">No images available</p>
+                </div>
+              )}
               
               {/* Navigation Arrows */}
-              {property.images.length > 1 && (
+              {images.length > 1 && (
                 <>
                   <button
                     onClick={prevImage}
@@ -346,9 +358,11 @@ export function PropertyDetailPage() {
               )}
 
               {/* Image Counter */}
+              {images.length > 0 && (
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-black/60 text-white text-sm">
-                {currentImageIndex + 1} / {property.images.length}
+                {currentImageIndex + 1} / {images.length}
               </div>
+              )}
 
               {/* Badges */}
               <div className="absolute top-4 left-4 flex flex-col gap-2">
@@ -374,7 +388,7 @@ export function PropertyDetailPage() {
 
             {/* Thumbnail Grid */}
             <div className="grid grid-cols-2 gap-4">
-              {property.images.slice(1, 5).map((img, idx) => (
+              {images.slice(1, 5).map((img, idx) => (
                 <div
                   key={idx}
                   onClick={() => setCurrentImageIndex(idx + 1)}
@@ -384,12 +398,13 @@ export function PropertyDetailPage() {
                     src={img.url}
                     alt={img.caption || `Image ${idx + 2}`}
                     className="w-full h-full object-cover"
+                    onError={(e) => { (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x240?text=Image+Not+Available'; }}
                   />
                 </div>
               ))}
-              {property.images.length > 5 && (
+              {images.length > 5 && (
                 <div className="h-[120px] md:h-[240px] rounded-xl bg-gray-100 flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors">
-                  <span className="text-gray-600 font-medium">+{property.images.length - 5} more</span>
+                  <span className="text-gray-600 font-medium">+{images.length - 5} more</span>
                 </div>
               )}
             </div>
@@ -411,7 +426,7 @@ export function PropertyDetailPage() {
                   </h1>
                   <p className="text-gray-500 flex items-center gap-2 mb-3">
                     <MapPin className="w-5 h-5 text-[#FF6B35]" />
-                    {property.location.address}, {property.location.area}, {property.location.city}
+                    {[location.address, location.area, location.city].filter(Boolean).join(', ')}
                   </p>
                 </div>
                 <div className="flex gap-2">
@@ -455,7 +470,7 @@ export function PropertyDetailPage() {
                 <div className="text-center flex-1">
                   <div className="flex items-center justify-center gap-2 text-gray-600 mb-1">
                     <Car className="w-5 h-5" />
-                    <span className="font-semibold text-2xl text-gray-800">{property.parking}</span>
+                    <span className="font-semibold text-2xl text-gray-800">{property.parking || 0}</span>
                   </div>
                   <p className="text-sm text-gray-500">Parking</p>
                 </div>
@@ -532,14 +547,18 @@ export function PropertyDetailPage() {
                 <Award className="w-5 h-5 text-[#FF6B35]" />
                 Amenities
               </h2>
+              {amenities.length > 0 ? (
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {property.amenities.map((amenity, idx) => (
+                {amenities.map((amenity, idx) => (
                   <div key={idx} className="flex items-center gap-3 p-3 rounded-xl bg-gray-50">
                     <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0" />
                     <span className="text-sm text-gray-700 capitalize">{amenity.replace('-', ' ')}</span>
                   </div>
                 ))}
               </div>
+              ) : (
+                <p className="text-gray-500 text-sm">No amenities listed for this property.</p>
+              )}
             </div>
 
             {/* Developer Info */}
@@ -549,36 +568,36 @@ export function PropertyDetailPage() {
                 Developer Information
               </h2>
               <div className="flex items-start gap-4">
-                {property.developer.logo && (
+                {developer.logo && (
                 <img
-                  src={property.developer.logo}
-                  alt={property.developer.name}
+                  src={developer.logo}
+                  alt={developer.name}
                   className="w-20 h-20 rounded-xl border border-gray-200"
                 />
                 )}
                 <div className="flex-1">
-                  <h3 className="font-bold text-gray-800 text-lg">{property.developer.name}</h3>
-                  {property.developer.description && <p className="text-gray-600 text-sm mt-1">{property.developer.description}</p>}
+                  <h3 className="font-bold text-gray-800 text-lg">{developer.name}</h3>
+                  {developer.description && <p className="text-gray-600 text-sm mt-1">{developer.description}</p>}
                   
                   <div className="flex items-center gap-2 mt-3">
                     <div className="flex items-center gap-1">
                       <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
-                      <span className="font-medium text-gray-800">{property.developer.trustScore}/100</span>
+                      <span className="font-medium text-gray-800">{developer.trustScore}/100</span>
                     </div>
-                    {property.developer.since && (<>
+                    {developer.since && (<>
                     <span className="text-gray-400">•</span>
-                    <span className="text-sm text-gray-500">Since {property.developer.since}</span>
+                    <span className="text-sm text-gray-500">Since {developer.since}</span>
                     </>)}
                   </div>
 
                   <div className="grid grid-cols-2 gap-4 mt-4">
                     <div className="p-3 rounded-xl bg-gray-50">
                       <p className="text-sm text-gray-500">Completed Projects</p>
-                      <p className="text-lg font-bold text-gray-800">{property.developer.completedProjects}</p>
+                      <p className="text-lg font-bold text-gray-800">{developer.completedProjects || 0}</p>
                     </div>
                     <div className="p-3 rounded-xl bg-gray-50">
                       <p className="text-sm text-gray-500">Ongoing Projects</p>
-                      <p className="text-lg font-bold text-gray-800">{property.developer.ongoingProjects}</p>
+                      <p className="text-lg font-bold text-gray-800">{developer.ongoingProjects || 0}</p>
                     </div>
                   </div>
                 </div>
@@ -712,13 +731,14 @@ export function PropertyDetailPage() {
                       className="rounded-xl overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow cursor-pointer"
                     >
                       <img
-                        src={prop.images[0]?.url}
+                        src={prop.images?.[0]?.url || 'https://via.placeholder.com/400x200?text=No+Image'}
                         alt={prop.title}
                         className="w-full h-32 object-cover"
+                        onError={(e) => { (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x200?text=No+Image'; }}
                       />
                       <div className="p-3">
                         <h4 className="font-medium text-gray-800 text-sm line-clamp-1">{prop.title}</h4>
-                        <p className="text-xs text-gray-500 mt-1">{prop.location.area}</p>
+                        <p className="text-xs text-gray-500 mt-1">{prop.location?.area || ''}</p>
                         <p className="font-bold text-[#1E3A5F] text-sm mt-2">
                           {formatPrice(prop.price)}
                         </p>

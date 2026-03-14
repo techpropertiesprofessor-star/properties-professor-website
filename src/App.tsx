@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigation } from '@/components/Navigation';
 import { Hero } from '@/sections/Hero';
 import { TrustBar } from '@/sections/TrustBar';
@@ -33,6 +33,56 @@ import MarketResearchPage from '@/pages/MarketResearchPage';
 import NRIPage from '@/pages/NRIPage';
 import NewsPage from '@/pages/NewsPage';
 import NewsDetailPage from '@/pages/NewsDetailPage';
+
+// Error Boundary Component to prevent white screen crashes
+class ErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean; error: Error | null }
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('App Error Boundary caught an error:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
+            <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-red-500" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+              </svg>
+            </div>
+            <h2 className="text-xl font-bold text-gray-800 mb-2">Something went wrong</h2>
+            <p className="text-gray-500 mb-6">We're sorry, but something unexpected happened. Please try refreshing the page.</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-6 py-3 bg-[#1E3A5F] text-white rounded-xl hover:bg-[#2d4a6f] transition-colors font-medium"
+            >
+              Refresh Page
+            </button>
+            <button
+              onClick={() => { window.location.href = '/'; }}
+              className="block mx-auto mt-3 text-sm text-[#FF6B35] hover:underline"
+            >
+              Go to Homepage
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 // Main Website Homepage
 function MainWebsite() {
@@ -744,7 +794,11 @@ function App() {
     }
   };
 
-  return renderRoute();
+  return (
+    <ErrorBoundary>
+      {renderRoute()}
+    </ErrorBoundary>
+  );
 }
 
 export default App;

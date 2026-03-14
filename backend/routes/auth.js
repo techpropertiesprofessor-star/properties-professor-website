@@ -92,6 +92,78 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// @route   POST /api/auth/google
+// @desc    Sign in or register with Google
+// @access  Public
+router.post('/google', async (req, res) => {
+  try {
+    const { credential } = req.body;
+
+    if (!credential) {
+      return res.status(400).json({ success: false, message: 'Google credential is required' });
+    }
+
+    // Verify Google token using Google's tokeninfo endpoint (no extra package needed)
+    const googleRes = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${credential}`);
+    
+    if (!googleRes.ok) {
+      return res.status(401).json({ success: false, message: 'Invalid Google token' });
+    }
+
+    const googleUser = await googleRes.json();
+    const { sub: googleId, email, name, picture } = googleUser;
+
+    if (!email) {
+      return res.status(400).json({ success: false, message: 'Google account must have an email' });
+    }
+
+    // Check if user already exists with this Google ID or email
+    let user = await User.findOne({ $or: [{ googleId }, { email }] });
+
+    if (user) {
+      // If user exists with email but not Google ID, link the Google account
+      if (!user.googleId) {
+        user.googleId = googleId;
+        user.authProvider = 'google';
+        if (picture && !user.avatar) {
+          user.avatar = picture;
+        }
+      }
+      // Update last login
+      user.lastLogin = new Date();
+      user.loginCount += 1;
+      await user.save();
+    } else {
+      // Create new user from Google data
+      user = await User.create({
+        name: name || email.split('@')[0],
+        email,
+        googleId,
+        authProvider: 'google',
+        avatar: picture || '',
+        isVerified: true,
+        role: 'user'
+      });
+    }
+
+    res.json({
+      success: true,
+      data: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        role: user.role,
+        avatar: user.avatar || picture,
+        token: generateToken(user._id)
+      }
+    });
+  } catch (error) {
+    console.error('Google auth error:', error);
+    res.status(500).json({ success: false, message: 'Google authentication failed', error: error.message });
+  }
+});
+
 // @route   GET /api/auth/me
 // @desc    Get current user
 // @access  Private
