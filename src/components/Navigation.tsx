@@ -19,10 +19,12 @@ const navLinks = [
   { label: 'News', href: '/news', icon: BookOpen }
 ];
 
-export function Navigation() {
+export function Navigation({ forceSolid = false }: { forceSolid?: boolean } = {}) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(isUserLoggedIn());
+
+  const activeScrolled = isScrolled || forceSolid;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,7 +51,7 @@ export function Navigation() {
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
+          activeScrolled
             ? 'bg-white/95 backdrop-blur-lg shadow-lg py-2'
             : 'bg-transparent py-3'
         }`}
@@ -69,12 +71,12 @@ export function Navigation() {
               />
               <div className="flex flex-col gap-0">
                 <span className={`text-base font-bold uppercase tracking-tight transition-colors leading-tight ${
-                  isScrolled ? 'text-[#1E3A5F]' : 'text-white'
+                  activeScrolled ? 'text-[#1E3A5F]' : 'text-white'
                 }`}>
                   PROPERTIES
                 </span>
                 <span className={`text-base font-bold uppercase tracking-tight transition-colors leading-tight ${
-                  isScrolled ? 'text-[#FF6B35]' : 'text-[#FF6B35]'
+                  activeScrolled ? 'text-[#FF6B35]' : 'text-[#FF6B35]'
                 }`}>
                   PROFESSOR
                 </span>
@@ -89,7 +91,7 @@ export function Navigation() {
                   href={link.href}
                   onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                    isScrolled 
+                    activeScrolled 
                       ? 'text-gray-600 hover:text-[#1E3A5F] hover:bg-gray-100' 
                       : 'text-white/90 hover:text-white hover:bg-white/10'
                   }`}
@@ -104,7 +106,7 @@ export function Navigation() {
               <button 
                 onClick={() => window.location.href = '/saved'}
                 className={`p-2.5 rounded-lg transition-colors ${
-                  isScrolled ? 'hover:bg-gray-100 text-gray-600' : 'hover:bg-white/10 text-white'
+                  activeScrolled ? 'hover:bg-gray-100 text-gray-600' : 'hover:bg-white/10 text-white'
                 }`}
                 title="Saved Properties"
               >
@@ -118,7 +120,7 @@ export function Navigation() {
                     window.location.href = '/';
                   }}
                   className={`p-2.5 rounded-lg transition-colors flex items-center gap-1 ${
-                    isScrolled ? 'hover:bg-gray-100 text-gray-600' : 'hover:bg-white/10 text-white'
+                    activeScrolled ? 'hover:bg-gray-100 text-gray-600' : 'hover:bg-white/10 text-white'
                   }`}
                   title="Logout"
                 >
@@ -128,7 +130,7 @@ export function Navigation() {
                 <button 
                   onClick={() => window.location.href = '/login'}
                   className={`p-2.5 rounded-lg transition-colors ${
-                    isScrolled ? 'hover:bg-gray-100 text-gray-600' : 'hover:bg-white/10 text-white'
+                    activeScrolled ? 'hover:bg-gray-100 text-gray-600' : 'hover:bg-white/10 text-white'
                   }`}
                   title="Login"
                 >
@@ -144,7 +146,7 @@ export function Navigation() {
                   }
                 }}
                 className={`flex items-center gap-2 ${
-                  isScrolled ? 'btn-primary' : 'bg-white/20 backdrop-blur-sm text-white hover:bg-white/30'
+                  activeScrolled ? 'btn-primary' : 'bg-white/20 backdrop-blur-sm text-white hover:bg-white/30'
                 }`}
               >
                 <Phone className="w-4 h-4" />
@@ -156,13 +158,13 @@ export function Navigation() {
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className={`lg:hidden p-2.5 rounded-lg transition-colors ${
-                isScrolled ? 'hover:bg-gray-100' : 'hover:bg-white/10'
+                activeScrolled ? 'hover:bg-gray-100' : 'hover:bg-white/10'
               }`}
             >
               {isMobileMenuOpen ? (
-                <X className={`w-6 h-6 ${isScrolled ? 'text-gray-600' : 'text-white'}`} />
+                <X className={`w-6 h-6 ${activeScrolled ? 'text-gray-600' : 'text-white'}`} />
               ) : (
-                <Menu className={`w-6 h-6 ${isScrolled ? 'text-gray-600' : 'text-white'}`} />
+                <Menu className={`w-6 h-6 ${activeScrolled ? 'text-gray-600' : 'text-white'}`} />
               )}
             </button>
           </div>

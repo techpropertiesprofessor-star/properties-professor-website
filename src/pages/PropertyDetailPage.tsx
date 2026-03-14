@@ -10,7 +10,12 @@ import {
 import { Button } from '@/components/ui/button';
 import type { Property } from '@/types';
 
-const API_BASE = 'https://api.propertiesprofessor.com/api';
+const API_BASE = import.meta.env.VITE_API_URL || 'https://api.propertiesprofessor.com/api';
+
+const isVideoUrl = (url?: string) => {
+  if (!url) return false;
+  return url.toLowerCase().match(/\.(mp4|webm|ogg|mov)$/i);
+};
 
 // Helper function to check if user is logged in  
 const isUserLoggedIn = () => {
@@ -305,7 +310,7 @@ export function PropertyDetailPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navigation />
+      <Navigation forceSolid={true} />
 
       {/* Back Button */}
       <div className="pt-20 pb-4 bg-white border-b border-gray-100">
@@ -321,18 +326,30 @@ export function PropertyDetailPage() {
       </div>
 
       {/* Image Gallery */}
-      <div className="bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="grid md:grid-cols-2 gap-4">
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {/* Main Image */}
-            <div className="relative h-[400px] md:h-[500px] rounded-2xl overflow-hidden group">
+            <div className="lg:col-span-2 relative h-[400px] md:h-[500px] rounded-2xl overflow-hidden group bg-gray-100 flex items-center justify-center">
               {images.length > 0 ? (
-              <img
-                src={images[currentImageIndex]?.url}
-                alt={images[currentImageIndex]?.caption || property.title}
-                className="w-full h-full object-cover"
-                onError={(e) => { (e.target as HTMLImageElement).src = 'https://via.placeholder.com/800x500?text=Image+Not+Available'; }}
-              />
+                isVideoUrl(images[currentImageIndex]?.url) ? (
+                  <video
+                    src={images[currentImageIndex]?.url}
+                    controls
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="w-full h-full object-contain bg-black/5"
+                  />
+                ) : (
+                  <img
+                    src={images[currentImageIndex]?.url}
+                    alt={images[currentImageIndex]?.caption || property.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => { (e.target as HTMLImageElement).src = 'https://via.placeholder.com/800x500?text=Image+Not+Available'; }}
+                  />
+                )
               ) : (
                 <div className="w-full h-full bg-gray-200 flex items-center justify-center">
                   <p className="text-gray-500">No images available</p>
@@ -387,26 +404,45 @@ export function PropertyDetailPage() {
             </div>
 
             {/* Thumbnail Grid */}
-            <div className="grid grid-cols-2 gap-4">
-              {images.slice(1, 5).map((img, idx) => (
-                <div
-                  key={idx}
-                  onClick={() => setCurrentImageIndex(idx + 1)}
-                  className="h-[120px] md:h-[240px] rounded-xl overflow-hidden cursor-pointer hover:opacity-80 transition-opacity"
-                >
-                  <img
-                    src={img.url}
-                    alt={img.caption || `Image ${idx + 2}`}
-                    className="w-full h-full object-cover"
-                    onError={(e) => { (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x240?text=Image+Not+Available'; }}
-                  />
-                </div>
-              ))}
-              {images.length > 5 && (
-                <div className="h-[120px] md:h-[240px] rounded-xl bg-gray-100 flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors">
-                  <span className="text-gray-600 font-medium">+{images.length - 5} more</span>
-                </div>
-              )}
+            <div className="lg:col-span-1 grid grid-cols-2 gap-4">
+              {images.slice(1, 5).map((img, idx) => {
+                const isLastThumbnail = idx === 3 && images.length > 5;
+                
+                return (
+                  <div
+                    key={idx}
+                    onClick={() => setCurrentImageIndex(isLastThumbnail ? 5 : idx + 1)}
+                    className="h-[150px] md:h-[240px] rounded-xl overflow-hidden cursor-pointer hover:opacity-80 transition-opacity bg-gray-100 relative group"
+                  >
+                    {isVideoUrl(img.url) ? (
+                      <>
+                        <video src={img.url} className="w-full h-full object-cover opacity-80" />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-10 h-10 rounded-full bg-black/60 flex items-center justify-center text-white">
+                            <svg className="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M4 4l12 6-12 6z" />
+                            </svg>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <img
+                        src={img.url}
+                        alt={img.caption || `Image ${idx + 2}`}
+                        className="w-full h-full object-cover"
+                        onError={(e) => { (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x240?text=Image+Not+Available'; }}
+                      />
+                    )}
+                    
+                    {/* +X More Overlay */}
+                    {isLastThumbnail && (
+                      <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                        <span className="text-white font-medium text-xl">+{images.length - 5}</span>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
