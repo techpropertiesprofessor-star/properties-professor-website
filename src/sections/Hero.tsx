@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Search, MapPin, Home, TrendingUp, ChevronDown, Mic, ArrowRight, MicOff } from 'lucide-react';
+import { Search, MapPin, ChevronDown, Mic, ArrowRight, MicOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { mockProperties, cities } from '@/data/mockData';
@@ -127,12 +127,6 @@ export function Hero() {
     window.location.href = routes[filter] || '/buy';
   };
 
-  const stats = [
-    { value: '10,000+', label: 'Verified Properties', icon: Home },
-    { value: '₹500Cr+', label: 'Value Transacted', icon: TrendingUp },
-    { value: '4.9/5', label: 'Customer Rating', icon: MapPin }
-  ];
-
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background Image with Overlay */}
@@ -181,7 +175,8 @@ export function Hero() {
                   <span className="block text-[#FF6B35]">Perfect Home</span>
                 </h1>
                 <p className="text-xl text-white/80 max-w-lg">
-                  Explore a wide range of properties for every budget and lifestyle.
+                  Discover verified properties with blockchain security, 
+                  AI-powered matching, and complete transparency.
                 </p>
               </div>
 
@@ -311,19 +306,7 @@ export function Hero() {
               </div>
 
               {/* Stats */}
-              <div className="flex flex-wrap gap-8 pt-4">
-                {stats.map((stat, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
-                      <stat.icon className="w-5 h-5 text-[#FF6B35]" />
-                    </div>
-                    <div>
-                      <div className="text-2xl font-bold text-white">{stat.value}</div>
-                      <div className="text-sm text-white/60">{stat.label}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                {/* Marketing stats removed as per requirements */}
             </div>
 
             {/* Right Column - Floating Cards */}

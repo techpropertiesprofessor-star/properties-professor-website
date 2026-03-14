@@ -61,6 +61,21 @@ export function Footer() {
   const [isLoggedIn, setIsLoggedIn] = useState(isUserLoggedIn());
 
   useEffect(() => {
+    // Fetch settings from backend API (works even before login)
+    const fetchSettings = async () => {
+      try {
+        const response = await fetch('https://api.propertiesprofessor.com/api/settings');
+        const data = await response.json();
+        if (data && data.contact) {
+          setSettings(prev => ({ ...prev, ...data }));
+        }
+      } catch {
+        // Fallback to localStorage or defaults
+        setSettings(getSiteSettings());
+      }
+    };
+    fetchSettings();
+
     // Listen for settings updates
     const handleSettingsUpdate = () => {
       setSettings(getSiteSettings());
@@ -190,10 +205,27 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Social Links Only */}
+        {/* App Download & Social */}
         <div className="border-t border-white/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+              {/* App Buttons */}
+              <div className="flex items-center gap-4">
+                <span className="text-white/70 text-sm">Download our app:</span>
+                <button className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors flex items-center gap-2">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.74 1.18 0 2.29-.74 3.24-.74 2.5.13 4.36 1.72 5.24 3.92-4.71 2.17-3.92 7.98.48 9.55-.57 1.51-1.31 2.99-2.04 4.5zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                  </svg>
+                  <span className="text-sm">App Store</span>
+                </button>
+                <button className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors flex items-center gap-2">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 0 1 0 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z"/>
+                  </svg>
+                  <span className="text-sm">Play Store</span>
+                </button>
+              </div>
+
               {/* Social Links */}
               <div className="flex items-center gap-4">
                 <span className="text-white/70 text-sm">Follow us:</span>
@@ -222,7 +254,9 @@ export function Footer() {
                 © 2026 Properties Professor. All rights reserved.
               </p>
               <div className="flex items-center gap-6">
-                {/* RERA badge removed */}
+                <span className="text-white/50 text-sm">
+                  RERA Registered: A51800012345
+                </span>
                 <button
                   onClick={scrollToTop}
                   className="w-10 h-10 rounded-full bg-[#FF6B35] hover:bg-[#e55a2b] flex items-center justify-center transition-colors"

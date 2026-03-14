@@ -131,7 +131,7 @@ export function NewsSection() {
             setNews(data.data);
           }
         }
-      } catch (error) {
+      } catch {
         // Silently use fallback data
         console.log('Using fallback news');
       }

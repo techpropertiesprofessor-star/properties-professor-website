@@ -83,7 +83,7 @@ export function TermsPage() {
             <p className="text-gray-600 mb-6">
               These Terms shall be governed and construed in accordance with the laws of India, without regard to its 
               conflict of law provisions. Any disputes shall be subject to the exclusive jurisdiction of courts in 
-              Pune, Maharashtra.
+              Noida, Uttar Pradesh.
             </p>
 
             <h2 className="text-2xl font-bold text-gray-800 mb-4">10. Changes to Terms</h2>
@@ -100,7 +100,7 @@ export function TermsPage() {
             <ul className="text-gray-600 space-y-2">
               <li>Email: propertiesproffer@gmail.com</li>
               <li>Phone: +91 91563 01600</li>
-              <li>Address: Pune, Maharashtra, India</li>
+              <li>Address: Noida, Uttar Pradesh, India</li>
             </ul>
           </div>
         </div>

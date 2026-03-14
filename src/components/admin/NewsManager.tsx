@@ -71,7 +71,7 @@ const API_BASE = 'https://api.propertiesprofessor.com/api';
 
 export function NewsManager() {
   const [news, setNews] = useState<NewsArticle[]>([]);
-  const [_loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);

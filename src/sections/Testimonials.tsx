@@ -92,7 +92,7 @@ export function Testimonials() {
             setTestimonials(data);
           }
         }
-      } catch (error) {
+      } catch {
         // Silently use fallback data
         console.log('Using fallback testimonials');
       }

@@ -123,7 +123,7 @@ export function PrivacyPage() {
             <ul className="text-gray-600 space-y-2">
               <li>Email: propertiesproffer@gmail.com</li>
               <li>Phone: +91 91563 01600</li>
-              <li>Address: Pune, Maharashtra, India</li>
+              <li>Address: Noida, Uttar Pradesh, India</li>
             </ul>
 
             <div className="mt-8 p-6 bg-blue-50 rounded-xl">

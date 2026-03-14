@@ -81,7 +81,7 @@ export function NeighborhoodDNA() {
             setAllLocations(data.data);
           }
         }
-      } catch (error) {
+      } catch {
         console.log('Using fallback locations');
         setAllLocations([
           'Bandra West, Mumbai',

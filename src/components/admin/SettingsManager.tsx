@@ -45,11 +45,11 @@ const defaultSettings: SiteSettings = {
     phone: '+91 91563 01600',
     email: 'propertiesproffer@gmail.com',
     tollFree: '1800 123 4567',
-    address: 'Office No. 123, Real Estate Plaza',
-    city: 'Pune',
-    state: 'Maharashtra',
-    pincode: '411001',
-    googleMapsUrl: 'https://maps.google.com/?q=Pune,Maharashtra'
+    address: 'Sector 62, Noida',
+    city: 'Noida',
+    state: 'Uttar Pradesh',
+    pincode: '201301',
+    googleMapsUrl: 'https://maps.google.com/?q=Noida,Uttar+Pradesh'
   },
   social: {
     instagram: 'https://www.instagram.com/propertiesprofessor',

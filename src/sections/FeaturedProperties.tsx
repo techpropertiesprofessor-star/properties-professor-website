@@ -33,7 +33,7 @@ export function FeaturedProperties() {
             setProperties([]);
           }
         }
-      } catch (error) {
+      } catch {
         // No fallback; show empty if fetch fails
       }
     };

@@ -43,7 +43,6 @@ const investmentInsights = [
 
 export function FinancialJourney() {
   const [loanAmount, setLoanAmount] = useState(5000000);
-  [8.5, 20];
   const [interestRate, setInterestRate] = useState(8.5);
   const [loanTenure, setLoanTenure] = useState(20);
   const { ref, isVisible } = useScrollAnimation<HTMLElement>();
