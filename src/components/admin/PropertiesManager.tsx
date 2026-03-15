@@ -45,6 +45,9 @@ interface PropertyFormData {
   furnishing: string;
   ageOfProperty: number;
   amenities: string;
+  maintenanceCharges: string;
+  keyLocation: string;
+  availabilityDate: string;
   developerName: string;
   status: string;
   images: { url: string; caption: string; isMain: boolean }[];
@@ -65,6 +68,9 @@ const initialFormData: PropertyFormData = {
   furnishing: 'unfurnished',
   ageOfProperty: 0,
   amenities: '',
+  maintenanceCharges: 'include',
+  keyLocation: '',
+  availabilityDate: '',
   developerName: 'Properties Professor',
   status: 'available',
   images: []
@@ -270,7 +276,12 @@ export function PropertiesManager() {
         trending: selectedSections.includes('trending')
       },
       displayOrder,
-      pricePerSqft: formData.areaSize > 0 ? Math.round(formData.price / formData.areaSize) : 0
+      pricePerSqft: formData.areaSize > 0 ? Math.round(formData.price / formData.areaSize) : 0,
+      financial: {
+        maintenanceCharges: formData.maintenanceCharges,
+        keyLocation: formData.keyLocation,
+        availabilityDate: formData.availabilityDate
+      }
     };
 
     try {
@@ -334,6 +345,9 @@ export function PropertiesManager() {
       amenities: property.amenities ? property.amenities.join(', ') : '',
       developerName: 'Properties Professor',
       status: property.status,
+      maintenanceCharges: property.financial?.maintenanceCharges || 'include',
+      keyLocation: property.financial?.keyLocation || '',
+      availabilityDate: property.financial?.availabilityDate || '',
       images: (property.images || []).map(img => ({
         url: img.url,
         caption: img.caption || '',
@@ -774,6 +788,96 @@ export function PropertiesManager() {
                     />
                   </div>
                 </div>
+                <div className="md:col-span-2">
+                  <label className="form-label">Maintenance Charges</label>
+                  <div className="flex gap-4 mt-2">
+                    <button
+                      type="button"
+                      onClick={() => setFormData({...formData, maintenanceCharges: 'include'})}
+                      className={`px-6 py-2 rounded-xl border transition-all ${
+                        formData.maintenanceCharges === 'include' 
+                          ? 'bg-[#1E3A5F] text-white border-[#1E3A5F]' 
+                          : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'
+                      }`}
+                    >
+                      Include in rent
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setFormData({...formData, maintenanceCharges: 'separate'})}
+                      className={`px-6 py-2 rounded-xl border transition-all ${
+                        formData.maintenanceCharges === 'separate' 
+                          ? 'bg-[#1E3A5F] text-white border-[#1E3A5F]' 
+                          : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'
+                      }`}
+                    >
+                      Separate
+                    </button>
+                  </div>
+                </div>
+
+                {/* Amenities Chips Section */}
+                <div className="md:col-span-2">
+                  <label className="form-label">Furnishings / Amenities</label>
+                  <button 
+                    type="button" 
+                    className="text-xs text-[#1E3A5F] hover:underline mb-2 block"
+                    onClick={() => setFormData({...formData, amenities: AMENITIES_LIST.join(', ')})}
+                  >
+                    + Add All Furnishings / Amenities
+                  </button>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {AMENITIES_LIST.map((amenity) => {
+                      const isSelected = formData.amenities.split(',').map(a => a.trim()).includes(amenity);
+                      return (
+                        <button
+                          key={amenity}
+                          type="button"
+                          onClick={() => {
+                            const current = formData.amenities.split(',').map(a => a.trim()).filter(Boolean);
+                            const updated = current.includes(amenity)
+                              ? current.filter(a => a !== amenity)
+                              : [...current, amenity];
+                            setFormData({...formData, amenities: updated.join(', ')});
+                          }}
+                          className={`px-4 py-2 rounded-full border transition-all text-sm shadow-sm font-medium ${
+                            isSelected 
+                              ? 'bg-[#1E3A5F] text-white border-[#1E3A5F]' 
+                              : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'
+                          }`}
+                        >
+                          {amenity}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <div className="mt-4">
+                    <label className="text-xs text-gray-500">Other Amenities (Comma Separated)</label>
+                    <Input 
+                      placeholder="E.g. swimming-pool, gym, etc."
+                      value={formData.amenities}
+                      onChange={(e) => setFormData({...formData, amenities: e.target.value})}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="form-label">Key Location</label>
+                  <Input 
+                    placeholder="e.g. With Owner, With Security" 
+                    value={formData.keyLocation}
+                    onChange={(e) => setFormData({...formData, keyLocation: e.target.value})}
+                  />
+                </div>
+                <div>
+                  <label className="form-label">Availability Date</label>
+                  <Input 
+                    type="date"
+                    value={formData.availabilityDate}
+                    onChange={(e) => setFormData({...formData, availabilityDate: e.target.value})}
+                  />
+                </div>
+
                 <div>
                   <label className="form-label">Status</label>
                   <select 

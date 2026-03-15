@@ -77,6 +77,9 @@ export interface Property {
     propertyTax?: number;
     registrationCharges?: number;
     stampDuty?: number;
+    maintenanceCharges?: string;
+    keyLocation?: string;
+    availabilityDate?: string;
   };
   blockchain?: {
     verified: boolean;

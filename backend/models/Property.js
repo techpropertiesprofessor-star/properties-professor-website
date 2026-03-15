@@ -166,7 +166,10 @@ const propertySchema = new mongoose.Schema({
     maintenance: { type: Number, default: 0 },
     propertyTax: { type: Number, default: 0 },
     registrationCharges: { type: Number, default: 0 },
-    stampDuty: { type: Number, default: 0 }
+    stampDuty: { type: Number, default: 0 },
+    maintenanceCharges: { type: String, enum: ['include', 'separate'], default: 'include' },
+    keyLocation: { type: String },
+    availabilityDate: { type: String }
   },
   blockchain: {
     verified: { type: Boolean, default: false },
