@@ -1,7 +1,8 @@
 const { S3Client, PutObjectCommand, DeleteObjectCommand, GetObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
-const { v4: uuidv4 } = require('uuid');
+const crypto = require('crypto');
 const path = require('path');
+const uuidv4 = crypto.randomUUID;
 
 // DigitalOcean Spaces Configuration
 const DO_SPACES_ENDPOINT = 'https://sgp1.digitaloceanspaces.com';
