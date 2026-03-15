@@ -113,7 +113,10 @@ const propertySchema = new mongoose.Schema({
       'power-backup', 'water-supply', 'gas-pipeline', 'garden', 'play-area',
       'jogging-track', 'community-hall', 'indoor-games', 'outdoor-games',
       'library', 'theatre', 'spa', 'wifi', 'intercom', 'fire-safety',
-      'rainwater-harvesting', 'solar-power', 'smart-home', 'modular-kitchen'
+      'rainwater-harvesting', 'solar-power', 'smart-home', 'modular-kitchen',
+      'ac', 'tv', 'fridge', 'washing-machine', 'geyser', 'wardrobe', 'bed',
+      'sofa', 'dining-table', 'ro', 'microwave', 'chimney', 'water-purifier',
+      'fan', 'light'
     ]
   }],
   images: [{
