@@ -34,7 +34,8 @@ export function LoginPage() {
     setIsLoading(true);
     setError('');
     try {
-      const res = await fetch('https://api.propertiesprofessor.com/api/auth/google', {
+      const API_URL = import.meta.env.VITE_API_URL || 'https://api.propertiesprofessor.com/api';
+      const res = await fetch(`${API_URL}/auth/google`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ credential: response.credential })
@@ -97,7 +98,8 @@ export function LoginPage() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('https://api.propertiesprofessor.com/api/auth/login', {
+      const API_URL = import.meta.env.VITE_API_URL || 'https://api.propertiesprofessor.com/api';
+      const response = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
