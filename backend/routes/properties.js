@@ -260,6 +260,11 @@ router.post('/', auth, adminOnly, async (req, res) => {
       message: 'Property created successfully'
     });
   } catch (error) {
+    console.error('Error creating property:', error);
+    if (error.name === 'ValidationError') {
+      const messages = Object.values(error.errors).map(val => val.message);
+      return res.status(400).json({ success: false, message: 'Validation Error', errors: messages });
+    }
     res.status(500).json({ success: false, message: 'Server error', error: error.message });
   }
 });

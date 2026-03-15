@@ -232,8 +232,8 @@ export function PropertiesManager() {
   };
 
   const handleSaveProperty = async () => {
-    if (!formData.title || !formData.city || !formData.price) {
-      alert('Please fill in all required fields');
+    if (!formData.title || !formData.city || !formData.area || !formData.price || !formData.areaSize) {
+      alert('Please fill in all required fields (Title, City, Area/Locality, Price, and Area Size)');
       return;
     }
 
@@ -301,12 +301,13 @@ export function PropertiesManager() {
       const data = await response.json();
       
       if (data.success) {
-        alert(editMode ? 'Property updated successfully!' : 'Property created successfully!');
+        alert(editMode ? 'Property updated successfully!' : 'Property added successfully!');
         setShowAddModal(false);
         resetForm();
         fetchProperties();
       } else {
-        alert(data.message || 'Failed to save property');
+        const errorMessage = data.errors ? `${data.message}:\n${data.errors.join('\n')}` : (data.message || 'Server error');
+        alert(errorMessage);
       }
     } catch (error) {
       console.error('Error saving property:', error);
