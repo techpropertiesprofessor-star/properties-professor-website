@@ -88,6 +88,12 @@ const sectionOptions: SectionToggle[] = [
   { id: 'trending', label: 'Trending', icon: TrendingUp, color: 'bg-cyan-500' }
 ];
 
+const AMENITIES_LIST = [
+  'AC', 'TV', 'Fridge', 'Washing Machine', 'Geyser', 'Modular Kitchen', 
+  'Wardrobe', 'Bed', 'Sofa', 'Dining Table', 'RO', 'Microwave', 
+  'Chimney', 'Water Purifier', 'Fan', 'Light'
+];
+
 const API_BASE = 'https://api.propertiesprofessor.com/api';
 
 export function PropertiesManager() {
@@ -733,13 +739,40 @@ export function PropertiesManager() {
                   />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="form-label">Amenities (Comma Separated)</label>
-                  <Input 
-                    placeholder="E.g. gym, swimming-pool, security, parking, lift, power-backup"
-                    value={formData.amenities}
-                    onChange={(e) => setFormData({...formData, amenities: e.target.value})}
-                  />
-                  <p className="text-xs text-gray-500 mt-1">Acceptable forms: gym, swimming-pool, clubhouse, parking, security, lift, power-backup, etc.</p>
+                  <label className="form-label">Amenities</label>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {AMENITIES_LIST.map((amenity) => {
+                      const isSelected = formData.amenities.split(',').map(a => a.trim()).includes(amenity);
+                      return (
+                        <button
+                          key={amenity}
+                          type="button"
+                          onClick={() => {
+                            const current = formData.amenities.split(',').map(a => a.trim()).filter(Boolean);
+                            const updated = current.includes(amenity)
+                              ? current.filter(a => a !== amenity)
+                              : [...current, amenity];
+                            setFormData({...formData, amenities: updated.join(', ')});
+                          }}
+                          className={`px-4 py-2 rounded-full border transition-all text-sm ${
+                            isSelected 
+                              ? 'bg-[#1E3A5F] text-white border-[#1E3A5F]' 
+                              : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'
+                          }`}
+                        >
+                          {amenity}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <div className="mt-4">
+                    <label className="text-xs text-gray-500">Other Amenities (Comma Separated)</label>
+                    <Input 
+                      placeholder="E.g. swimming-pool, gym, etc."
+                      value={formData.amenities}
+                      onChange={(e) => setFormData({...formData, amenities: e.target.value})}
+                    />
+                  </div>
                 </div>
                 <div>
                   <label className="form-label">Status</label>

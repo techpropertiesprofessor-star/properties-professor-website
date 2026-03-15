@@ -390,106 +390,87 @@ function ContactPage() {
         <div className="grid md:grid-cols-2 gap-12">
           {/* Contact Form */}
           <div className="bg-white rounded-2xl p-8 shadow-md">
-            {isLoggedIn ? (
-              submitted ? (
-                <div className="text-center py-12">
-                  <div className="w-20 h-20 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-6">
-                    <span className="text-4xl">✅</span>
-                  </div>
-                  <h2 className="text-2xl font-bold text-gray-800 mb-3">Message Sent!</h2>
-                  <p className="text-gray-600 mb-6">Thank you for contacting us. We'll get back to you shortly.</p>
-                  <button 
-                    onClick={() => setSubmitted(false)}
-                    className="px-8 py-3 rounded-xl bg-[#1E3A5F] text-white font-semibold hover:bg-[#2d4a6f] transition-colors"
-                  >
-                    Send Another Message
-                  </button>
-                </div>
-              ) : (
-                <>
-                  <h2 className="text-2xl font-bold text-gray-800 mb-6">Send us a Message</h2>
-                  <form onSubmit={handleSubmit} className="space-y-5">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
-                        <input 
-                          type="text" 
-                          value={formData.firstName}
-                          onChange={(e) => setFormData({...formData, firstName: e.target.value})}
-                          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1E3A5F] focus:ring-2 focus:ring-[#1E3A5F]/20 outline-none" 
-                          placeholder="John" 
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
-                        <input 
-                          type="text" 
-                          value={formData.lastName}
-                          onChange={(e) => setFormData({...formData, lastName: e.target.value})}
-                          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1E3A5F] focus:ring-2 focus:ring-[#1E3A5F]/20 outline-none" 
-                          placeholder="Doe" 
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Email *</label>
-                      <input 
-                        type="email" 
-                        value={formData.email}
-                        onChange={(e) => setFormData({...formData, email: e.target.value})}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1E3A5F] focus:ring-2 focus:ring-[#1E3A5F]/20 outline-none" 
-                        placeholder="john@example.com" 
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Phone *</label>
-                      <input 
-                        type="tel" 
-                        value={formData.phone}
-                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1E3A5F] focus:ring-2 focus:ring-[#1E3A5F]/20 outline-none" 
-                        placeholder="+91 98765 43210" 
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                      <textarea 
-                        value={formData.message}
-                        onChange={(e) => setFormData({...formData, message: e.target.value})}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1E3A5F] focus:ring-2 focus:ring-[#1E3A5F]/20 outline-none h-32 resize-none" 
-                        placeholder="How can we help you?"
-                      ></textarea>
-                    </div>
-                    <button 
-                      type="submit"
-                      disabled={submitting}
-                      className="w-full py-3 rounded-xl bg-[#FF6B35] text-white font-semibold hover:bg-[#e55a2b] transition-colors disabled:opacity-50"
-                    >
-                      {submitting ? 'Sending...' : 'Send Message'}
-                    </button>
-                  </form>
-                </>
-              )
-            ) : (
+            {submitted ? (
               <div className="text-center py-12">
-                <div className="w-20 h-20 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-6">
-                  <span className="text-4xl">🔐</span>
+                <div className="w-20 h-20 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-6">
+                  <span className="text-4xl">✅</span>
                 </div>
-                <h2 className="text-2xl font-bold text-gray-800 mb-3">Login Required</h2>
-                <p className="text-gray-600 mb-6">Please login to send us a message or make enquiries</p>
+                <h2 className="text-2xl font-bold text-gray-800 mb-3">Message Sent!</h2>
+                <p className="text-gray-600 mb-6">Thank you for contacting us. We'll get back to you shortly.</p>
                 <button 
-                  onClick={() => window.location.href = '/login'}
+                  onClick={() => setSubmitted(false)}
                   className="px-8 py-3 rounded-xl bg-[#1E3A5F] text-white font-semibold hover:bg-[#2d4a6f] transition-colors"
                 >
-                  Login to Continue
+                  Send Another Message
                 </button>
-                <p className="text-sm text-gray-500 mt-4">
-                  Don't have an account? <a href="/register" className="text-[#FF6B35] hover:underline">Register here</a>
-                </p>
               </div>
+            ) : (
+              <>
+                <h2 className="text-2xl font-bold text-gray-800 mb-6">Send us a Message</h2>
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
+                      <input 
+                        type="text" 
+                        value={formData.firstName}
+                        onChange={(e) => setFormData({...formData, firstName: e.target.value})}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1E3A5F] focus:ring-2 focus:ring-[#1E3A5F]/20 outline-none" 
+                        placeholder="John" 
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                      <input 
+                        type="text" 
+                        value={formData.lastName}
+                        onChange={(e) => setFormData({...formData, lastName: e.target.value})}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1E3A5F] focus:ring-2 focus:ring-[#1E3A5F]/20 outline-none" 
+                        placeholder="Doe" 
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                    <input 
+                      type="email" 
+                      value={formData.email}
+                      onChange={(e) => setFormData({...formData, email: e.target.value})}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1E3A5F] focus:ring-2 focus:ring-[#1E3A5F]/20 outline-none" 
+                      placeholder="john@example.com" 
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Phone *</label>
+                    <input 
+                      type="tel" 
+                      value={formData.phone}
+                      onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1E3A5F] focus:ring-2 focus:ring-[#1E3A5F]/20 outline-none" 
+                      placeholder="+91 98765 43210" 
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                    <textarea 
+                      value={formData.message}
+                      onChange={(e) => setFormData({...formData, message: e.target.value})}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1E3A5F] focus:ring-2 focus:ring-[#1E3A5F]/20 outline-none h-32 resize-none" 
+                      placeholder="How can we help you?"
+                    ></textarea>
+                  </div>
+                  <button 
+                    type="submit"
+                    disabled={submitting}
+                    className="w-full py-3 rounded-xl bg-[#FF6B35] text-white font-semibold hover:bg-[#e55a2b] transition-colors disabled:opacity-50"
+                  >
+                    {submitting ? 'Sending...' : 'Send Message'}
+                  </button>
+                </form>
+              </>
             )}
           </div>
 
