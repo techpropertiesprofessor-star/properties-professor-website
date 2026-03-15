@@ -84,10 +84,20 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
 
-    // Update last login
-    user.lastLogin = new Date();
-    user.loginCount += 1;
     await user.save();
+    
+    // Ensure customer record exists
+    try {
+      await Customer.findOrCreateCustomer({
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        source: 'website',
+        sourceDetails: 'Standard Login'
+      });
+    } catch (err) {
+      console.error('Customer sync error on login:', err);
+    }
 
     res.json({
       success: true,
@@ -139,11 +149,7 @@ router.post('/google', async (req, res) => {
       if (!user.googleId) {
         user.googleId = googleId;
         user.authProvider = 'google';
-        if (picture && !user.avatar) {
-          user.avatar = picture;
-        }
       }
-      // Update last login
       user.lastLogin = new Date();
       user.loginCount += 1;
       await user.save();
@@ -158,18 +164,19 @@ router.post('/google', async (req, res) => {
         isVerified: true,
         role: 'user'
       });
+    }
 
-      // Automatically log inside Customer Data Table
-      try {
-        await Customer.findOrCreateCustomer({
-          name: name || email.split('@')[0],
-          email,
-          source: 'website',
-          sourceDetails: 'Google Sign-In Account Creation'
-        });
-      } catch (err) {
-        console.error('Failed to log Google user to customer table:', err);
-      }
+    // Always ensure user is synced to Customer Data table on Google Sign-In
+    try {
+      await Customer.findOrCreateCustomer({
+        name: user.name,
+        email: user.email,
+        phone: user.phone || '',
+        source: 'website',
+        sourceDetails: 'Google Sign-In'
+      });
+    } catch (err) {
+      console.error('Customer sync error on Google sign-in:', err);
     }
 
     res.json({
