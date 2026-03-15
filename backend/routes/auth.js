@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const Customer = require('../models/Customer');
 const { auth } = require('../middleware/auth');
 
 // Generate JWT Token
@@ -32,6 +33,19 @@ router.post('/register', async (req, res) => {
       phone,
       role: role || 'user'
     });
+
+    // Automatically add to Customer Data tracker
+    try {
+      await Customer.findOrCreateCustomer({
+        name,
+        email,
+        phone,
+        source: 'website',
+        sourceDetails: 'User Registration'
+      });
+    } catch (err) {
+      console.error('Failed to augment customer table:', err);
+    }
 
     if (user) {
       res.status(201).json({
@@ -144,6 +158,18 @@ router.post('/google', async (req, res) => {
         isVerified: true,
         role: 'user'
       });
+
+      // Automatically log inside Customer Data Table
+      try {
+        await Customer.findOrCreateCustomer({
+          name: name || email.split('@')[0],
+          email,
+          source: 'website',
+          sourceDetails: 'Google Sign-In Account Creation'
+        });
+      } catch (err) {
+        console.error('Failed to log Google user to customer table:', err);
+      }
     }
 
     res.json({
