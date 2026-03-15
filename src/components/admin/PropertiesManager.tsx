@@ -752,42 +752,7 @@ export function PropertiesManager() {
                     onChange={(e) => setFormData({...formData, ageOfProperty: parseInt(e.target.value) || 0})}
                   />
                 </div>
-                <div className="md:col-span-2">
-                  <label className="form-label">Amenities</label>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {AMENITIES_LIST.map((amenity) => {
-                      const isSelected = formData.amenities.split(',').map(a => a.trim()).includes(amenity);
-                      return (
-                        <button
-                          key={amenity}
-                          type="button"
-                          onClick={() => {
-                            const current = formData.amenities.split(',').map(a => a.trim()).filter(Boolean);
-                            const updated = current.includes(amenity)
-                              ? current.filter(a => a !== amenity)
-                              : [...current, amenity];
-                            setFormData({...formData, amenities: updated.join(', ')});
-                          }}
-                          className={`px-4 py-2 rounded-full border transition-all text-sm ${
-                            isSelected 
-                              ? 'bg-[#1E3A5F] text-white border-[#1E3A5F]' 
-                              : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'
-                          }`}
-                        >
-                          {amenity}
-                        </button>
-                      );
-                    })}
-                  </div>
-                  <div className="mt-4">
-                    <label className="text-xs text-gray-500">Other Amenities (Comma Separated)</label>
-                    <Input 
-                      placeholder="E.g. swimming-pool, gym, etc."
-                      value={formData.amenities}
-                      onChange={(e) => setFormData({...formData, amenities: e.target.value})}
-                    />
-                  </div>
-                </div>
+
                 <div className="md:col-span-2">
                   <label className="form-label">Maintenance Charges</label>
                   <div className="flex gap-4 mt-2">
@@ -828,15 +793,20 @@ export function PropertiesManager() {
                   </button>
                   <div className="flex flex-wrap gap-2 mt-2">
                     {AMENITIES_LIST.map((amenity) => {
-                      const isSelected = formData.amenities.split(',').map(a => a.trim()).includes(amenity);
+                      const slug = amenity.toLowerCase().replace(/ /g, '-');
+                      const currentAmenities = formData.amenities.split(',').map(a => a.trim().toLowerCase().replace(/ /g, '-'));
+                      const isSelected = currentAmenities.includes(slug);
+                      
                       return (
                         <button
                           key={amenity}
                           type="button"
                           onClick={() => {
                             const current = formData.amenities.split(',').map(a => a.trim()).filter(Boolean);
-                            const updated = current.includes(amenity)
-                              ? current.filter(a => a !== amenity)
+                            const isAlreadySelected = current.some(a => a.toLowerCase().replace(/ /g, '-') === slug);
+                            
+                            const updated = isAlreadySelected
+                              ? current.filter(a => a.toLowerCase().replace(/ /g, '-') !== slug)
                               : [...current, amenity];
                             setFormData({...formData, amenities: updated.join(', ')});
                           }}

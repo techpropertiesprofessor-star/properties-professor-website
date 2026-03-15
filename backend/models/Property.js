@@ -106,19 +106,7 @@ const propertySchema = new mongoose.Schema({
       lng: { type: Number, default: 0 }
     }
   },
-  amenities: [{
-    type: String,
-    enum: [
-      'gym', 'swimming-pool', 'clubhouse', 'parking', 'security', 'lift',
-      'power-backup', 'water-supply', 'gas-pipeline', 'garden', 'play-area',
-      'jogging-track', 'community-hall', 'indoor-games', 'outdoor-games',
-      'library', 'theatre', 'spa', 'wifi', 'intercom', 'fire-safety',
-      'rainwater-harvesting', 'solar-power', 'smart-home', 'modular-kitchen',
-      'ac', 'tv', 'fridge', 'washing-machine', 'geyser', 'wardrobe', 'bed',
-      'sofa', 'dining-table', 'ro', 'microwave', 'chimney', 'water-purifier',
-      'fan', 'light'
-    ]
-  }],
+  amenities: [String],
   images: [{
     url: { type: String, required: true },
     caption: { type: String },
