@@ -4,8 +4,8 @@ import { Footer } from '@/sections/Footer';
 import { Eye, EyeOff, Mail, Lock, User, Phone, ArrowRight, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-// Google Client ID - set via VITE_GOOGLE_CLIENT_ID in .env.local
-const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '';
+// Google Client ID - set via VITE_GOOGLE_CLIENT_ID in .env.local or hardcoded fallback
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '135035145468-51mlulpubbrvep5dtb9sjtafoimfh8f4.apps.googleusercontent.com';
 
 declare global {
   interface Window {
