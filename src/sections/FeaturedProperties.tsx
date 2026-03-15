@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { MapPin, Bed, Bath, Maximize, ChevronLeft, ChevronRight, Heart, CheckCircle, TrendingUp } from 'lucide-react';
+import { MapPin, Bed, Bath, Maximize, ChevronLeft, ChevronRight, Heart, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 // Removed mockProperties import; only real backend data will be used
@@ -198,18 +198,7 @@ export function FeaturedProperties() {
 
                 {/* Content */}
                 <div className="p-5">
-                  {/* Developer Trust Score */}
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50">
-                      <TrendingUp className="w-3.5 h-3.5 text-emerald-600" />
-                      <span className="text-xs font-medium text-emerald-700">
-                        TrustScore {property.developer.trustScore}
-                      </span>
-                    </div>
-                    <span className="text-xs text-gray-500">
-                      {property.developer.name}
-                    </span>
-                  </div>
+                  {/* Developer info explicitly minimized for Properties Professor */}
 
                   {/* Title */}
                   <h3 className="font-semibold text-gray-800 text-lg mb-2 line-clamp-1">

@@ -173,7 +173,6 @@ export function PropertyDetailPage() {
 
   const images = property.images || [];
   const amenities = property.amenities || [];
-  const developer = property.developer || { name: 'Unknown', trustScore: 0, completedProjects: 0, ongoingProjects: 0 };
   const location = property.location || { city: '', area: '', address: '' };
 
   const nextImage = () => {
@@ -597,48 +596,7 @@ export function PropertyDetailPage() {
               )}
             </div>
 
-            {/* Developer Info */}
-            <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-                <Shield className="w-5 h-5 text-[#FF6B35]" />
-                Developer Information
-              </h2>
-              <div className="flex items-start gap-4">
-                {developer.logo && (
-                <img
-                  src={developer.logo}
-                  alt={developer.name}
-                  className="w-20 h-20 rounded-xl border border-gray-200"
-                />
-                )}
-                <div className="flex-1">
-                  <h3 className="font-bold text-gray-800 text-lg">{developer.name}</h3>
-                  {developer.description && <p className="text-gray-600 text-sm mt-1">{developer.description}</p>}
-                  
-                  <div className="flex items-center gap-2 mt-3">
-                    <div className="flex items-center gap-1">
-                      <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
-                      <span className="font-medium text-gray-800">{developer.trustScore}/100</span>
-                    </div>
-                    {developer.since && (<>
-                    <span className="text-gray-400">•</span>
-                    <span className="text-sm text-gray-500">Since {developer.since}</span>
-                    </>)}
-                  </div>
 
-                  <div className="grid grid-cols-2 gap-4 mt-4">
-                    <div className="p-3 rounded-xl bg-gray-50">
-                      <p className="text-sm text-gray-500">Completed Projects</p>
-                      <p className="text-lg font-bold text-gray-800">{developer.completedProjects || 0}</p>
-                    </div>
-                    <div className="p-3 rounded-xl bg-gray-50">
-                      <p className="text-sm text-gray-500">Ongoing Projects</p>
-                      <p className="text-lg font-bold text-gray-800">{developer.ongoingProjects || 0}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
             {/* Neighborhood */}
             {property.neighborhood && (

@@ -259,11 +259,7 @@ export function BuyPage() {
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                  <div className="text-sm">
-                    <span className="text-gray-500">by </span>
-                    <span className="font-medium text-gray-700">{property.developer.name}</span>
-                  </div>
+                <div className="flex items-center justify-end pt-4 border-t border-gray-100">
                   <Button 
                     className="btn-primary text-sm py-2"
                     onClick={() => window.location.href = `/property/${property._id}`}

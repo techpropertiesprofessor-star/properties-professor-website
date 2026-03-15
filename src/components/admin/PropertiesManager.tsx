@@ -41,6 +41,10 @@ interface PropertyFormData {
   areaSize: number;
   bedrooms: number;
   bathrooms: number;
+  parking: number;
+  furnishing: string;
+  ageOfProperty: number;
+  amenities: string;
   developerName: string;
   status: string;
   images: { url: string; caption: string; isMain: boolean }[];
@@ -55,8 +59,12 @@ const initialFormData: PropertyFormData = {
   address: '',
   price: 0,
   areaSize: 0,
-  bedrooms: 2,
-  bathrooms: 2,
+  bedrooms: 0,
+  bathrooms: 0,
+  parking: 0,
+  furnishing: 'unfurnished',
+  ageOfProperty: 0,
+  amenities: '',
   developerName: 'Properties Professor',
   status: 'available',
   images: []
@@ -229,6 +237,10 @@ export function PropertiesManager() {
       area: formData.areaSize,
       bedrooms: formData.bedrooms,
       bathrooms: formData.bathrooms,
+      parking: formData.parking,
+      furnishing: formData.furnishing,
+      ageOfProperty: formData.ageOfProperty,
+      amenities: formData.amenities.split(',').map(a => a.trim().toLowerCase().replace(/ /g, '-')).filter(Boolean),
       location: {
         city: formData.city,
         area: formData.area,
@@ -308,9 +320,13 @@ export function PropertiesManager() {
       address: property.location.address || '',
       price: property.price,
       areaSize: property.area,
-      bedrooms: property.bedrooms,
-      bathrooms: property.bathrooms,
-      developerName: property.developer?.name || '',
+      bedrooms: property.bedrooms || 0,
+      bathrooms: property.bathrooms || 0,
+      parking: property.parking || 0,
+      furnishing: property.furnishing || 'unfurnished',
+      ageOfProperty: property.ageOfProperty || 0,
+      amenities: property.amenities ? property.amenities.join(', ') : '',
+      developerName: 'Properties Professor',
       status: property.status,
       images: (property.images || []).map(img => ({
         url: img.url,
@@ -682,17 +698,48 @@ export function PropertiesManager() {
                   <Input 
                     type="number" 
                     placeholder="Number of bathrooms"
-                    value={formData.bathrooms}
+                    value={formData.bathrooms || ''}
                     onChange={(e) => setFormData({...formData, bathrooms: parseInt(e.target.value) || 0})}
                   />
                 </div>
                 <div>
-                  <label className="form-label">Developer Name</label>
+                  <label className="form-label">Parking</label>
                   <Input 
-                    placeholder="Enter developer name"
-                    value={formData.developerName}
-                    onChange={(e) => setFormData({...formData, developerName: e.target.value})}
+                    type="number" 
+                    placeholder="Number of parking spots"
+                    value={formData.parking || ''}
+                    onChange={(e) => setFormData({...formData, parking: parseInt(e.target.value) || 0})}
                   />
+                </div>
+                <div>
+                  <label className="form-label">Furnishing</label>
+                  <select 
+                    className="form-input"
+                    value={formData.furnishing}
+                    onChange={(e) => setFormData({...formData, furnishing: e.target.value})}
+                  >
+                    <option value="unfurnished">Unfurnished</option>
+                    <option value="semi-furnished">Semi-Furnished</option>
+                    <option value="fully-furnished">Fully-Furnished</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="form-label">Age of Property (years)</label>
+                  <Input 
+                    type="number" 
+                    placeholder="E.g. 0 for new, 5 for 5 years old"
+                    value={formData.ageOfProperty || ''}
+                    onChange={(e) => setFormData({...formData, ageOfProperty: parseInt(e.target.value) || 0})}
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="form-label">Amenities (Comma Separated)</label>
+                  <Input 
+                    placeholder="E.g. gym, swimming-pool, security, parking, lift, power-backup"
+                    value={formData.amenities}
+                    onChange={(e) => setFormData({...formData, amenities: e.target.value})}
+                  />
+                  <p className="text-xs text-gray-500 mt-1">Acceptable forms: gym, swimming-pool, clubhouse, parking, security, lift, power-backup, etc.</p>
                 </div>
                 <div>
                   <label className="form-label">Status</label>
